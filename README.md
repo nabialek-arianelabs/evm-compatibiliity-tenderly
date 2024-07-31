@@ -174,20 +174,146 @@ Provides insight into smart contract methods gas usage
 - from the transaction view you may select "Gas Profiler" from the menu on the upper part of main display.
 - from the Gas Profiler menu you may choose to see any section of smart-contract stack trace, see the code in the debugger, how much
   gas was used on particular function call and also re-simulate the transaction (with changes to the source code)
-### 5. Transaction Simulations: 
+## 5. Transaction Simulations: 
 Transaction Simulations let you preview the exact outcome of a transaction before it is executed on the live network
-#### Types of transaction simulation:
+### Types of transaction simulation:
 - Single Transaction Simulation: test transaction without risking real assets and spending gas/money.
 - Bundled Transaction Simulation: used for testing interdependent transactions.
-#### Use cases
+### Use cases
 - Asset and balance changes: Get exact dollar values for all balance and asset changes that will happen.
 - Gas estimation: Accurately predict the gas costs before sending the transaction.
 - State overrides: Modify blockchain conditions like timestamps and contract data to test different scenarios.
 - Preview transaction outcomes: Identify and fix issues that could cause transactions to fail.
 - Access lists: Create lists of addresses and storage slots the transaction will access.
 - Human-readable errors: Get complex errors decoded into explanations that you can easily understand.
-### Drawbacks, issues, disclaimers:
+### How to use
+#### Via Tenderly Platform: 
+- Go to Contracts page, select or add contract for which you want to simulate transaction and press `Simulate`:
+![contracts-page.png](source/contracts-page.png)
+- Fill details for the transaction simulation details and press `Simulate Transaction`:
+![simulation-menu.png](source/simulation-menu.png)
+- Example result look as follows: 
+![simulation-result-window.png](source/simulation-result-window.png)
+#### Via RPC: 
+You may call any RPC node in Tenderly 
+to simulate transaction, example pressented below: 
+```bash
+curl https://mainnet.gateway.tenderly.co/$TENDERLY_NODE_ACCESS_KEY \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d \
+  '{
+    "id": 0,
+    "jsonrpc": "2.0",
+    "method": "tenderly_simulateTransaction",
+    "params": [
+      {
+        "from": "0xe2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "gas": "0x7a1200",
+        "gasPrice": "0x0",
+        "value": "0x0",
+        "data": "0x095ea7b3000000000000000000000000f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1000000000000000000000000000000000000000000000000000000000000012b"
+      },
+      "0xfc497b"
+    ]
+  }'
+```
+Urls are available under: **Node RPC** > select node that you want to call > in main menu, url will be available
+![img.png](source/node-url.png)
+Example of the response: 
+```json
+{
+  "id": 0,
+  "jsonrpc": "2.0",
+  "result": {
+    "status": true,
+    "gasUsed": "0xb412",
+    "cumulativeGasUsed": "0xb412",
+    "blockNumber": "0xfc497b",
+    "type": "0x0",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000028000000000000000002000000000000000000000010000000000000000004000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000010000000000000000000000000040000000000000000000000000000800000",
+    "logs": [
+      {
+        "name": "Approval",
+        "anonymous": false,
+        "inputs": [
+          {
+            "value": "0xe2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2",
+            "type": "address",
+            "name": "src",
+            "indexed": true
+          },
+          {
+            "value": "0xf1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1",
+            "type": "address",
+            "name": "guy",
+            "indexed": true
+          },
+          {
+            "value": "299",
+            "type": "uint256",
+            "name": "wad",
+            "indexed": false
+          }
+        ],
+        "raw": {
+          "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+          "topics": [
+            "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+            "0x000000000000000000000000e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2",
+            "0x000000000000000000000000f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1"
+          ],
+          "data": "0x000000000000000000000000000000000000000000000000000000000000012b"
+        }
+      }
+    ],
+    "trace": [
+      {
+        "type": "CALL",
+        "from": "0xe2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2",
+        "to": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "gas": "0x79bdb0",
+        "gasUsed": "0x5fc2",
+        "value": "0x0",
+        "input": "0x095ea7b3000000000000000000000000f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1000000000000000000000000000000000000000000000000000000000000012b",
+        "decodedInput": [
+          {
+            "value": "0xf1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1",
+            "type": "address",
+            "name": "usr",
+            "indexed": false
+          },
+          {
+            "value": "299",
+            "type": "uint256",
+            "name": "wad",
+            "indexed": false
+          }
+        ],
+        "method": "approve",
+        "output": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "decodedOutput": [
+          {
+            "value": true,
+            "type": "bool",
+            "indexed": false
+          }
+        ],
+        "subtraces": 0,
+        "traceAddress": []
+      }
+    ]
+  }
+}
+```
+#### Via API:
+Example may be found in the `hardhat-transaction-simulation-example`, project is setuped as normal, in `deploy.ts` scritp
+Tenderly instance must be created, in it you define transaction details as well as destination. 
+## Drawbacks, issues, disclaimers:
 - chain id during TestNet creation: default one doesn't work
 - there is no information how to setup alerts with web3 actions
 - Alerts: Allowlist Callers and Blocklisted Callers have swapped alert description
 - Gas profiler: there is a note that code may be optimized but there is no description how to do it (how to modify contract from the gas profiler or debugger sub menu) in the documentation.
+- Transaction simulation via API is done diffrently than in documentation
+- Alerts, Web3 Actions, Debugger, and Transaction Simulation are working only for Node RPC's not for Virtual TestNets
