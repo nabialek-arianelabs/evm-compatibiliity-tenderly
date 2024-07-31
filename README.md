@@ -1,4 +1,5 @@
 # Tenderly
+
 This document aims to provide an overview of Tenderly platform features,
 its limitations, and its usage, particularly in the context of working
 with the Hedera network. Tenderly does not support networks that are
@@ -12,6 +13,7 @@ upon development, on-chain deployment, debugging process, while simultaneously
 providing multi-chain node RPC, integrated development environments and
 any necessary infrastructure.
 
+
 # Main Features:
 ## 1. Virtual TestNets/DevNets\Forks:
 Simulated blockchain networks, designed to replicate real networks. During development process of this tool naming chainged 
@@ -22,6 +24,7 @@ ability to create snapshot of network that next may be tweaked, its internal sta
 - Continuous integration infrastructure - allowing frequent integration of all dapp components and running automated tests.
 - Staging infrastructure - that serves for purposes of manual testing, demoing, community testing, and contract auditing.
 - Collaborative development infrastructure - allowing to develop dapps in iterations with minimal interference.
+
 ### Features and tools:
 - TestNet Explorer: provides overview of transactions, contracts, wallets and RPC's on the TestNet
 - Unlimited Faucet
@@ -68,6 +71,7 @@ forge create \
 Counter
 ```
 #### 2. Connect metamask client
+
 #### 3. Setup Tenderly account:
 - Create account on the Tenderly Platform
 - Create Virtual TestNet with the network of your choice (recommended is custom chain ID)
@@ -76,7 +80,9 @@ Counter
 #### 4. Setup of Tenderly Project (for the hardhat):
 - create and get to project directory
 - `npm init -y` - initialize node project
+
 - `npm install --save-dev hardhat@2.22.0` - install hardhat dependency (make sure that hardhat is of version <= 2.22.0 - scripts directory should be present)
+
 - `npx hardhat init` - initialize hardhat project
 - `npm install --save-dev @tenderly/hardhat-tenderly` - install tenderly dependency
 - Add this lines on the beginning of the `hardhat.cofig.ts` file
@@ -84,6 +90,7 @@ Counter
 import * as tdly from "@tenderly/hardhat-tenderly";
 tdly.setup();
 ```
+
 also copy and paste `HardhatUserConfig` from Tenderly platform main menu:
 ![img.png](source/virtual-testnet-menu.png)
 ![img.png](source/integrate.png)
@@ -93,10 +100,12 @@ also copy and paste `HardhatUserConfig` from Tenderly platform main menu:
 ## 2. Web3 Actions:
 Automated serverless backend for the dapps - serve as programmable hooks for relevant on/off chain events.
 ### Usages:
+
 - active monitoring and automate code responses to specific events
 - combined with alerts, enable to create alert-response patterns for relevant on-chain changes
 - allow to connect smart-contracts with off chain infrastructure: APIs, frontends and other services
 - may improve UX by gathering and sharing important information through notifications
+
 ### Web3 Action Setup:
 By documentation there are two main setup routes:
 #### 1. Tenderly Portal
@@ -108,6 +117,7 @@ In the Project menu go to the Web3 Actions and follow up the steps:
 - select one of the networks on which action will be executed and execution type: sequential or
 parallel, sequential action trigger is done if order of triggering should be preserved or if there are bandwidth limitations
 #### 2. Tenderly CLI
+
 - initialize the action: `tenderly actions init` (select your project when prompted)
 - you may modify `example.ts` in `/actions` directory, this will be logic that will be triggered upon action trigger
 - 'tenderly.yaml' file specifies in what conditions action will be triggered:
@@ -131,6 +141,7 @@ actions:
 ```
 under project_slug you write down name of the project, under account_id, your account name
 - deploy action with: `tenderly actions deploy
+
 ## 3. Alerts:
 Alerts listen for events on the blockchain and sends real-time notifictations to desired destination when event occurs.
 ### Types of triggers:
@@ -146,12 +157,14 @@ Alerts listen for events on the blockchain and sends real-time notifictations to
 - Transaction Value - Notifies you when a transaction value matches set conditions. This alert is useful in situations when a transaction with more than a certain amount of ETH calls a contract.
 - State Change - Fires when a state variable in a contract changes.
 - View Function - Alerts you when a view function's return value matches certain criteria, passes a threshold, or changes by a certain percentage.
+
 ### Types of targets:
 Define addresses that may trigger the alarm
 - Address - only this address can trigger the alarm
 - Network - all addresses deployed on the network may trigger the alarm
 - Project - every address in the Tenderly project may trigger the alarm
 - Tag - every address with the selected tag may trigger the alarm
+
 ### Alert Setup:
 Alerts are possible to set up only from the Tenderly platform menu, and can be accessed under Monitoring - Alerts in main project menu, setting up alert involves following steps:
 - Set the [trigger type](#types-of-triggers)
@@ -164,6 +177,7 @@ Alerts are possible to set up only from the Tenderly platform menu, and can be a
     - discord
     - tenderly web3 action (note: possible to set up from the web3 action sub menu)
     - webhook
+  
 ## 4. Gas profiler:
 Provides insight into smart contract methods gas usage
 - granular gas usage breakdown and analyze how each function call spends gas.
@@ -174,6 +188,7 @@ Provides insight into smart contract methods gas usage
 - from the transaction view you may select "Gas Profiler" from the menu on the upper part of main display.
 - from the Gas Profiler menu you may choose to see any section of smart-contract stack trace, see the code in the debugger, how much
   gas was used on particular function call and also re-simulate the transaction (with changes to the source code)
+
 ## 5. Transaction Simulations: 
 Transaction Simulations let you preview the exact outcome of a transaction before it is executed on the live network
 ### Types of transaction simulation:
