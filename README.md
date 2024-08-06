@@ -29,7 +29,7 @@ ability to create snapshot of network that next may be tweaked, its internal sta
 - Transactions:
   - Send transaction
   - Simulate transaction
-  - Debug transaction - wip
+  - Debug transaction - this feature is currently work in progress 
 - Contracts and wallets:
   - Deploy contracts
   - Verify contracts
@@ -38,7 +38,7 @@ ability to create snapshot of network that next may be tweaked, its internal sta
   - Admin RPC - full customization of TestNet environment
 ### Prerequisites:
 #### 1. Hardhat or Foundry:
-Tenderly has better integration with Hardhat due to the existence of the @tenderly/hardhat-tenderly plugin which streamlines the whole process.
+Tenderly has better integration with Hardhat due to the existence of the `@tenderly/hardhat-tenderly` plugin which streamlines the whole process.
 The user doesn’t have to pass a private key for example - it’s done under the hood by the plugin. In Foundry all necessary parameters must be passed manually.
 Tenderly tends to have similar problems with automatic smart contract verification with the newest versions of those frameworks (the most recent versions will not work).
 

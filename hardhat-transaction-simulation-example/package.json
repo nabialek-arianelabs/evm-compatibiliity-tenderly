@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "npx hardhat run scripts/deploy.ts --network tenderly"
   },
-  "keywords": [],
-  "author": "",
+  "author": "mn.arianelabs",
   "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",

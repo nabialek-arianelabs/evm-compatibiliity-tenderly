@@ -12,12 +12,12 @@ export const config: HardhatUserConfig = {
   defaultNetwork: "tenderly",
   networks: {
     tenderly: {
-      url: "https://polygon-amoy.gateway.tenderly.co/3WXw9y4A9DeGB3xGeSadsM",
-      chainId: 80002,
+      url: process.env.TNDRLY_NODE_URL,
+      chainId: Number(process.env.CHAIN_ID!),
     },
   },
   tenderly: {
-    username: "nabialek-ariane",
-    project: "tenderly-ariane",
+    username: process.env.TNDRLY_USERNAME!,
+    project: process.env.TNDRLY_PROJECT!,
   },
 };

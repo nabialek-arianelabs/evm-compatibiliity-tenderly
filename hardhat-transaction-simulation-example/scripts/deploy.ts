@@ -1,13 +1,12 @@
+import * as dotenv from 'dotenv';
 const { ethers } = require("ethers");
 const Tenderly = require("@tenderly/tenderly-sdk");
 
-const PRIVATE_KEY = 'PRIVATE_KEY';
-const RPC_URL = 'RPC_URL';
-const TENDERLY_ACCESS_KEY = 'TENDERLY_ACCESS_KEY';
+dotenv.config();
 
 async function main() {
-  const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
-  const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
+  const provider = new ethers.providers.JsonRpcProvider(process.env.TNDRLY_RPC_URL);
+  const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
   const Tender = require("./Tender.json");
   const factory = new ethers.ContractFactory(Tender.abi, Tender.bytecode, wallet);
   const tender = await factory.deploy(300);
@@ -19,7 +18,7 @@ async function main() {
   await provider.send("evm_increaseTime", [301]);
   await tender.endTender();
   await tender.withdraw();
-  const tenderly = new Tenderly(TENDERLY_ACCESS_KEY);
+  const tenderly = new Tenderly(process.env.TENDERLY_ACCESS_KEY);
   const simulation = await tenderly.simulations.create({
     network_id: "1",
     from: wallet.address,
